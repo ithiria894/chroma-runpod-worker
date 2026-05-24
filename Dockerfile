@@ -1,9 +1,12 @@
 FROM runpod/worker-comfyui:5.8.5-flux1-dev
 
-# Base image already has: VAE (ae.safetensors), T5-XXL, CLIP-L, and Flux.1-dev
-# We just add CHROMA UNet on top
-
-# Download CHROMA model (uncensored Flux fork) into diffusion_models dir
-RUN wget -q --show-progress -O /comfyui/models/unet/chroma-unlocked-v35.safetensors \
-    "https://huggingface.co/lodestones/Chroma/resolve/main/chroma-unlocked-v35.safetensors" && \
-    echo "CHROMA checkpoint downloaded"
+# Download CHROMA with retries and size verification
+RUN pip install huggingface_hub && \
+    python3 -c "
+from huggingface_hub import hf_hub_download
+import os
+path = hf_hub_download(repo_id='lodestones/Chroma', filename='chroma-unlocked-v35.safetensors', local_dir='/comfyui/models/unet/')
+size = os.path.getsize(path)
+print(f'CHROMA downloaded: {size/1024**3:.2f} GB')
+assert size > 10_000_000_000, f'File too small: {size} bytes, likely corrupted'
+" && echo "CHROMA verified OK"
