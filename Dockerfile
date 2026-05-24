@@ -1,4 +1,4 @@
-FROM runpod/worker-comfyui:3.3.2-base
+FROM runpod/worker-comfyui:5.8.5-base
 
 # Download CHROMA model (uncensored Flux fork)
 RUN wget -q --show-progress -O /comfyui/models/checkpoints/chroma-unlocked-v35.safetensors \
