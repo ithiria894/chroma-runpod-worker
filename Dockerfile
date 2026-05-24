@@ -10,7 +10,7 @@ RUN wget -q --show-progress -O /comfyui/models/clip/t5xxl_fp8_e4m3fn.safetensors
     "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors" && \
     echo "T5-XXL downloaded"
 
-# Download VAE
+# Download VAE (from public mirror, no auth needed)
 RUN wget -q --show-progress -O /comfyui/models/vae/ae.safetensors \
-    "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/ae.safetensors" && \
+    "https://huggingface.co/cocktailpeanut/xulf-dev/resolve/main/ae.safetensors" && \
     echo "VAE downloaded"
